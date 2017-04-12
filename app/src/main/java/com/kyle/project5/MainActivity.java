@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void breakfast(View view){
-
+        Intent myService = new Intent(this, EggService.class);
+        startService(myService);
     }
 
 
