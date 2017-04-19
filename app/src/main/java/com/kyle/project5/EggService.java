@@ -45,7 +45,7 @@ public class EggService extends Service {
         edit.commit();
 
         Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
-        notifyUser();
+        notifyUser(b);
 
 
 
@@ -53,16 +53,15 @@ public class EggService extends Service {
         return START_NOT_STICKY;
     }
 
-    private void notifyUser(){
+    private void notifyUser(Bundle bundle){
         boolean useIndeterminateProgressBar = false;
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         Notification noti = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText("Just a Notice")
+                .setContentText(bundle.getString("description"))
                 .setSmallIcon(R.drawable.egg)
-                .setOngoing(true)						//true only dismissable by app
-                .setProgress(100,50,useIndeterminateProgressBar )				//show a progress bar
+                .setOngoing(false)						//true only dismissable by app
                 .build();
         noti.flags |= Notification.FLAG_INSISTENT;
         notificationManager.notify(MYNOTIFICATION, noti);
