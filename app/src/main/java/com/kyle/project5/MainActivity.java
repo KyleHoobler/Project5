@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    BroadcastReceiver receiver;
+    Receiver receiver;
     IntentFilter filter;
     private int eggCount;
 
@@ -22,23 +22,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         filter = new IntentFilter();
 
-        receiver = new BroadcastReceiver(){
-
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                String action = intent.getAction();
-                if(action != null){
-
-                    
-
-                }
-
-            }
-        };
+        receiver = new Receiver();
 
         registerReceiver(receiver, filter);
+
     }
 
     @Override
@@ -54,16 +41,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addOne(View view){
-
+        Intent intent = new Intent();
+        intent.putExtra("num", 1);
+        intent.setAction("com.kyle.project5.EGGCELANT");
+        sendBroadcast(intent);
     }
 
     public void addTwo(View view){
-
+        Intent intent = new Intent();
+        intent.putExtra("num", 2);
+        intent.setAction("com.kyle.project5.EGGCELANT");
+        sendBroadcast(intent);
     }
 
     public void minusOne(View view){
+        Intent intent = new Intent();
+        intent.putExtra("num", -1);
+        intent.setAction("com.kyle.project5.EGGCELANT");
+        sendBroadcast(intent);
 
+    }
 
+    public void broadcastIntent(View view){
 
     }
 

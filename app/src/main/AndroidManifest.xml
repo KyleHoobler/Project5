@@ -12,9 +12,18 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".Receiver">
+            <intent-filter>
+                <action android:name="com.kyle.project5.EGGCELANT">
+                </action>
+            </intent-filter>
+
+        </receiver>
 
         <service android:name = ".EggService">        </service>
     </application>
