@@ -13,6 +13,7 @@ public class Receiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 
         Intent background = new Intent(context, EggService.class);
+        background.putExtra("Info", intent.getExtras());
 
         context.startService(background);
 

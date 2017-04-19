@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -28,13 +29,16 @@ public class EggService extends Service {
                 "com.kyle.project5", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
 
+        Bundle b = intent.getBundleExtra("Info");
+       // Toast.makeText(this,b.getInt("num") + "",Toast.LENGTH_SHORT).show();
+
         if( prefs.getInt("eggCount", 0) == 0) {
             edit.putInt("eggCount", 0);
             edit.commit();
         }
 
        int eggCount = prefs.getInt("eggCount", 0);
-        eggCount++;
+        eggCount += b.getInt("num");
         edit.putInt("eggCount", eggCount);
         edit.commit();
 
