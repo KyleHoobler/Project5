@@ -1,15 +1,20 @@
 package com.kyle.project5;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
+
+/**
+ * @author Kyle Hoobler and Clifton Dent
+ * @version 4/18/17
+ *
+ * This is an android app that using a broadcast receiver and a service to count eggs
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     Receiver receiver;
@@ -20,17 +25,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        filter = new IntentFilter();
-
-        receiver = new Receiver();
-
-        registerReceiver(receiver, filter);
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+        filter = new IntentFilter();
+        receiver = new Receiver();
         registerReceiver(receiver, filter);
     }
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public void addOne(View view){
         Intent intent = new Intent();
         intent.putExtra("num", 1);
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         intent.putExtra("description", "One added!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public void addTwo(View view){
         Intent intent = new Intent();
         intent.putExtra("num", 2);
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         intent.putExtra("description", "Two added!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public void minusOne(View view){
         Intent intent = new Intent();
         intent.putExtra("num", -1);
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         intent.putExtra("description", "One removed!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
@@ -67,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void breakfast(View view){
         Intent intent = new Intent();
-        intent.putExtra("breakfast", "Breakfast");
+        intent.putExtra("description", "Breakfast");
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
     }

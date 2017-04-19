@@ -14,15 +14,14 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import java.util.Random;
+
 /**
  * Created by taylo on 4/12/2017.
  */
 
 public class EggService extends Service {
 
-
-    private static final int MYNOTIFICATION = 1;
-    private static final int TWO_SECONDS = 2000;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -32,7 +31,7 @@ public class EggService extends Service {
         SharedPreferences.Editor edit = prefs.edit();
 
         Bundle b = intent.getBundleExtra("Info");
-       // Toast.makeText(this,b.getInt("num") + "",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,b.getInt("num") + ""Toast.LENGTH_SHORT).show();
 
         if( prefs.getInt("eggCount", 0) == 0) {
             edit.putInt("eggCount", 0);
@@ -40,31 +39,47 @@ public class EggService extends Service {
         }
 
        int eggCount = prefs.getInt("eggCount", 0);
-        if(eggCount + b.getInt("num") >= 0) {
+
+        if(b.getString("description").equals("Breakfast")){
+
+            if(eggCount >= 6){
+                eggCount -= 6;
+                edit.putInt("eggCount", eggCount);
+                edit.commit();
+                notifyUser("We are having omelets, we have " + eggCount + " eggs available.");
+            }
+            else{
+                notifyUser("We are having gruel, we have " + eggCount + " eggs available." );
+            }
+
+
+        }
+        else if(eggCount + b.getInt("num") >= 0) {
             eggCount += b.getInt("num");
             edit.putInt("eggCount", eggCount);
             edit.commit();
 
-            Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
-            notifyUser(b);
+           // Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
+
+            notifyUser(b.getString("description"));
         }
-
-
 
         return START_NOT_STICKY;
     }
 
-    private void notifyUser(Bundle bundle){
+    private void notifyUser(String desc){
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Random random = new Random();
+        int m = random.nextInt(9999 - 1000) + 1000;
 
         Notification noti = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(bundle.getString("description"))
+                .setContentText(desc)
                 .setSmallIcon(R.drawable.egg)
                 .setOngoing(false)						//true only dismissable by app
                 .build();
         noti.flags |= Notification.FLAG_INSISTENT;
-        notificationManager.notify(MYNOTIFICATION, noti);
+        notificationManager.notify(m, noti);
     }
 
 
