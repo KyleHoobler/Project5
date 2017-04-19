@@ -60,7 +60,7 @@ public class EggService extends Service {
         Notification noti = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText("Just a Notice")
-
+                .setSmallIcon(R.drawable.egg)
                 .setOngoing(true)						//true only dismissable by app
                 .setProgress(100,50,useIndeterminateProgressBar )				//show a progress bar
                 .build();
