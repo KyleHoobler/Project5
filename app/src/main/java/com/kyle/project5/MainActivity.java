@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        registerReceiver(receiver,filter);
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void addOne(View view){
         Intent intent = new Intent();
         intent.putExtra("num", 1);
+        intent.putExtra("description", "One added!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
     }
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public void addTwo(View view){
         Intent intent = new Intent();
         intent.putExtra("num", 2);
+        intent.putExtra("description", "Two added!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
     }
@@ -57,18 +59,17 @@ public class MainActivity extends AppCompatActivity {
     public void minusOne(View view){
         Intent intent = new Intent();
         intent.putExtra("num", -1);
+        intent.putExtra("description", "One removed!");
         intent.setAction("com.kyle.project5.EGGCELANT");
         sendBroadcast(intent);
 
     }
 
-    public void broadcastIntent(View view){
-
-    }
-
     public void breakfast(View view){
-        Intent myService = new Intent(this, EggService.class);
-        startService(myService);
+        Intent intent = new Intent();
+        intent.putExtra("breakfast", "Breakfast");
+        intent.setAction("com.kyle.project5.EGGCELANT");
+        sendBroadcast(intent);
     }
 
 
