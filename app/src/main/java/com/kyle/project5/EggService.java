@@ -1,6 +1,8 @@
 package com.kyle.project5;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -19,7 +21,7 @@ import android.widget.Toast;
 public class EggService extends Service {
 
 
-
+    private static final int MYNOTIFICATION = 1;
     private static final int TWO_SECONDS = 2000;
 
     @Override
@@ -43,12 +45,27 @@ public class EggService extends Service {
         edit.commit();
 
         Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
-
+        notifyUser();
 
 
 
 
         return START_NOT_STICKY;
+    }
+
+    private void notifyUser(){
+        boolean useIndeterminateProgressBar = false;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        Notification noti = new Notification.Builder(this)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText("Just a Notice")
+
+                .setOngoing(true)						//true only dismissable by app
+                .setProgress(100,50,useIndeterminateProgressBar )				//show a progress bar
+                .build();
+        noti.flags |= Notification.FLAG_INSISTENT;
+        notificationManager.notify(MYNOTIFICATION, noti);
     }
 
 
