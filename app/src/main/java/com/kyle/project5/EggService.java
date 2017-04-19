@@ -40,13 +40,14 @@ public class EggService extends Service {
         }
 
        int eggCount = prefs.getInt("eggCount", 0);
-        eggCount += b.getInt("num");
-        edit.putInt("eggCount", eggCount);
-        edit.commit();
+        if(eggCount + b.getInt("num") >= 0) {
+            eggCount += b.getInt("num");
+            edit.putInt("eggCount", eggCount);
+            edit.commit();
 
-        Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
-        notifyUser(b);
-
+            Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
+            notifyUser(b);
+        }
 
 
 
@@ -54,7 +55,6 @@ public class EggService extends Service {
     }
 
     private void notifyUser(Bundle bundle){
-        boolean useIndeterminateProgressBar = false;
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         Notification noti = new Notification.Builder(this)
