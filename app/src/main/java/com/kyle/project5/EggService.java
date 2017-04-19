@@ -23,12 +23,25 @@ public class EggService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "In Service", Toast.LENGTH_SHORT).show();
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
                 "com.kyle.project5", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
 
-       // if(prefs.)
+        if( prefs.getInt("eggCount", 0) == 0) {
+            edit.putInt("eggCount", 0);
+            edit.commit();
+        }
+
+       int eggCount = prefs.getInt("eggCount", 0);
+        eggCount++;
+        edit.putInt("eggCount", eggCount);
+        edit.commit();
+
+        Toast.makeText(this, eggCount + "", Toast.LENGTH_SHORT).show();
+
+
+
 
 
         return START_NOT_STICKY;
